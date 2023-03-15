@@ -1,0 +1,45 @@
+environment:
+  properties:
+    jdkPathPrefix: target/jdks
+    graalFilePrefix: graalvm-ce-java19-22.3.1
+
+project:
+  name: helloworld
+  description: HelloWorld in Java
+  longDescription: HelloWorld in Java
+  links:
+    homepage: https://github.com/aalmiray/helloworld-graalvm-jlink
+  authors:
+    - Andres Almiray
+  license: APACHE-2.0
+  inceptionYear: 2023
+  stereotype: cli
+  java:
+    version: 17
+    groupId: org.jreleaser.examples
+    artifactId: helloworld
+    mainClass: org.jreleaser.examples.HelloWorld
+
+release:
+  github:
+    overwrite: true
+    changelog:
+      formatted: ALWAYS
+      preset: conventional-commits
+      contributors:
+        format: '- {{contributorName}}{{#contributorUsernameAsLink}} ({{.}}){{/contributorUsernameAsLink}}'
+
+assemble:
+  jlink:
+    helloworld:
+      active: ALWAYS
+      imageName: '{{distributionName}}-{{projectVersion}}'
+      targetJdks:
+        - path: '{{jdkPathPrefix}}/graalvm22OsxIntel/{{graalFilePrefix}}/Contents/Home'
+          platform: 'osx-x86_64'
+        - path: '{{jdkPathPrefix}}/graalvm22LinuxIntel/{{graalFilePrefix}}'
+          platform: 'linux-x86_64'
+        - path: '{{jdkPathPrefix}}/graalvm22WindowsIntel/{{graalFilePrefix}}'
+          platform: 'windows-x86_64'
+      mainJar:
+        path: 'target/{{distributionName}}-{{projectVersion}}.jar'

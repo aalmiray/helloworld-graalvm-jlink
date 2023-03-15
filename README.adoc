@@ -1,0 +1,13 @@
+= Helloworld in Java
+
+== Requirements
+
+ 1. Graal 22.3.1 jdk19: `sdk install java 22.3.1.r19-grl`
+ 2. JReleaser 1.5.1: `sdk install jreleaser 1.5.1`
+
+== Building
+
+ 1. `./mvnw verify`
+ 2. `./mvnw -Pjdks`
+ 3. `jreleaser assemble`
+
